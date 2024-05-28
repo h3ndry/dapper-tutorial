@@ -1,4 +1,4 @@
-namespace DataAccess.DBAccess;
+namespace DataAccess.DbAccess;
 
 public interface ISqlDataAccess
 {

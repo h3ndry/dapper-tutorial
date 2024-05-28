@@ -1,4 +1,4 @@
-using DataAccess.DBAccess;
+using DataAccess.DbAccess;
 using DataAccess.Models;
 
 namespace DataAccess.Data;
@@ -17,7 +17,7 @@ public class UserData : IUserData
 
     public async Task<UserModel?> GetUser(int id)
     {
-        var results = await _db.LoadData<UserModel, dynamic>("get_user", new { id });
+        var results = await _db.LoadData<UserModel, dynamic>("get_user(@id);", new { id });
         return results.FirstOrDefault();
     }
 

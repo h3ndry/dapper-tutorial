@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 
-namespace DataAccess.DBAccess;
+namespace DataAccess.DbAccess;
 
 public class SqlDataAccess : ISqlDataAccess
 {
@@ -14,12 +14,14 @@ public class SqlDataAccess : ISqlDataAccess
     }
 
     public async Task<IEnumerable<T>> LoadData<T, U>(
-            string storeProcedure,
+            string psgFun,
             U parameters,
             string connectionId = "Default")
     {
+        var sqlQuery = $"select * from {psgFun}";
+
         using IDbConnection connection = new Npgsql.NpgsqlConnection(_config.GetConnectionString(connectionId));
-        return await connection.QueryAsync<T>(storeProcedure, parameters, commandType: CommandType.StoredProcedure);
+        return await connection.QueryAsync<T>(sqlQuery, parameters);
     }
 
     public async Task SaveData<T>(
